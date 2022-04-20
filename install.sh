@@ -98,10 +98,11 @@ setup_rn() {
     load_rources
     # install react-native-cli
     npm install -g react-native-cli
-}
 
-setup_build_agent() {
-    title "Setting up the build agent"
+    info "Setting up cocoapods"
+    sudo gem install cocoapods
+    gem install -n /usr/local/bin/ bundler
+    gem install -n /usr/local/bin/ fastlane
 }
 
 setup_rvm() {
@@ -117,6 +118,21 @@ setup_rvm() {
     rvm install $RUBY_VERSION
     # set ruby version as default
     rvm alias create default $RUBY_VERSION
+}
+
+setup_build_agent() {
+    title "Setting up the build agent"
+
+    info "Android bundle install"
+    cd "$CODE_DIR/android"
+    bundle install
+    fastlane install_plugins
+
+    info "iOS bundle install"
+    cd "$CODE_DIR/ios"
+    bundle install
+    fastlane install_plugins
+    fastlane cert
 }
 
 setup_macos() {
@@ -227,7 +243,7 @@ case "$1" in
         setup_macos
         ;;
     *)
-        echo -e $"\nUsage: $(basename "$0") {backup|link|homebrew|shell|nvm|node|rvm|rn|macos|agent|all}\n"
+        echo -e $"\nUsage: $(basename "$0") {link|homebrew|shell|nvm|node|rvm|rn|macos|agent|all}\n"
         exit 1
         ;;
 esac

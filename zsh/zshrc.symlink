@@ -1,5 +1,6 @@
 export ZSH=$DOTFILES/zsh
 
+
 if [[ -d $DOTFILES/zsh/functions ]]; then
     for func in $DOTFILES/zsh/functions/*(:t); autoload -U $func
 fi
@@ -42,9 +43,9 @@ if [[ -d ~/code ]]; then
     export CODE_DIR=~/code
 fi
 
-# define the nvm directory
-export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+if [[ -d ~/buildAgent ]]; then
+    export BUILD_AGENT_DIR=~/buildAgent
+fi
 
 # display how long all tasks over 10 seconds take
 export REPORTTIME=10
@@ -164,6 +165,8 @@ alias ..='cd ..'
 alias ...='cd ../..'
 alias ....="cd ../../.."
 alias .....="cd ../../../.."
+alias cdios="c && cd ios"
+alias cdand="c && cd android"
 
 alias l="ls -lah ${colorflag}"
 alias la="ls -AF ${colorflag}"
@@ -178,6 +181,8 @@ alias du='du -h -c' # calculate disk usage for a folder
 
 # Applications
 alias ios='open -a /Applications/Xcode.app/Contents/Developer/Applications/Simulator.app'
+alias startAgent='sh $BUILD_AGENT_DIR/bin/agent.sh start'
+alias stopAgent='sh $BUILD_AGENT_DIR/bin/agent.sh stop kill'
 
 # Hide/show all desktop icons (useful when presenting)
 alias hidedesktop="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
