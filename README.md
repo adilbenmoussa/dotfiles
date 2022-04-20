@@ -1,6 +1,6 @@
 # Dotfiles
 
-Welcome to Adil's. This is a collection of zsh, git, homebrew, rvm, nvm etc...
+Welcome to Adil's whole world. This is a collection of zsh, git, homebrew, rvm, nvm etc...
 
 ### Installation
 
@@ -19,7 +19,7 @@ Then, clone the dotfiles repository anywhere you like on your machine.
 ```
 
 
-The install script will perform a check to see if it is running on an OSX machine. If so, it will install Homebrew if it is not currently installed and will install the homebrew packages listed in [`Brewfile`](Brewfile). Then, it will run [`osx.sh`](install/osx.sh) and change some OSX configurations. This file is pretty well documented and so it is advised that you __read through and comment out any changes you do not want__.
+The install script will perform a check to see if it is running on an OSX machine. If so, it will install Homebrew if it is not currently installed and will install the homebrew packages listed in [`Brewfile`](Brewfile). Then, it will run macos and change some OSX configurations. This file is pretty well documented and so it is advised that you __read through and comment out any changes you do not want__.
 
 ## ZSH Setup
 
