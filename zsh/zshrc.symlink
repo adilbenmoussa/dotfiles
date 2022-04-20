@@ -42,6 +42,10 @@ if [[ -d ~/code ]]; then
     export CODE_DIR=~/code
 fi
 
+# define the nvm directory
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+
 # display how long all tasks over 10 seconds take
 export REPORTTIME=10
 export KEYTIMEOUT=1              # 10ms delay for key sequences
@@ -106,12 +110,6 @@ export ZPLUGDIR="$CACHEDIR/zsh/plugins"
 # array containing plugin information (managed by zfetch)
 typeset -A plugins
 
-zfetch mafredri/zsh-async async.plugin.zsh
-zfetch zsh-users/zsh-syntax-highlighting
-zfetch zsh-users/zsh-autosuggestions
-zfetch chriskempson/base16-shell
-zfetch Aloxaf/fzf-tab
-
 if [[ -x "$(command -v fnm)" ]]; then
     eval "$(fnm env --use-on-cd)"
 fi
@@ -152,7 +150,7 @@ fi
 ########################################################
 
 # reload zsh config
-alias reload!='RELOAD=1 source ~/.zshrc'
+alias rld='RELOAD=1 source ~/.zshrc'
 
 # Detect which `ls` flavor is in use
 if ls --color > /dev/null 2>&1; then # GNU `ls`
@@ -200,7 +198,6 @@ alias nr="npm run"
 alias y="yarn"
 
 source "$DOTFILES/zsh/utils.zsh"
-source "$DOTFILES/zsh/prompt.zsh"
 
 # If a local zshrc exists, source it
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
@@ -208,3 +205,7 @@ source "$DOTFILES/zsh/prompt.zsh"
 if [[ -a ~/.localrc ]]; then
     source ~/.localrc
 fi
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completionrld

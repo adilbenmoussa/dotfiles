@@ -11,6 +11,13 @@ COLOR_PURPLE="\033[1;35m"
 COLOR_YELLOW="\033[1;33m"
 COLOR_NONE="\033[0m"
 
+load_rources() {
+    . ~/.nvm/nvm.sh
+    . ~/.profile
+    . ~/.bashrc
+    . $(brew --prefix nvm)/nvm.sh
+}
+
 title() {
     echo -e "\n${COLOR_PURPLE}$1${COLOR_NONE}"
     echo -e "${COLOR_GRAY}==============================${COLOR_NONE}\n"
@@ -57,30 +64,38 @@ setup_homebrew() {
     if test ! "$(command -v brew)"; then
         info "Homebrew not installed. Installing."
         # Run as a login shell (non-interactive) so that the script doesn't pause for user input
-        curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh | bash --login
+        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     fi
 
     # install brew dependencies from Brewfile
     brew bundle
-
-    # install fzf
-    echo -e
-    info "Installing fzf"
-    "$(brew --prefix)"/opt/fzf/install --key-bindings --completion --no-update-rc --no-bash --no-fish
 }
 
 setup_nvm() {
-    title "Setting up NVM and node"
+    title "Setting up NVM"
 
+    if test ! "$(command -v nvm)"; then
+        info "NVM not installed. Installing."
+        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash --login
+    fi
+}
+
+setup_node() {
+    title "Setting up node"
+
+    load_rources
     # install npm version
     nvm install $NPM_VERSION
-    # set npm version as default
+    # set npm version as default 
     nvm alias default $NPM_VERSION
+
+    npm install -g yarn
 }
 
 setup_rn() {
     title "Setting up React Native"
     
+    load_rources
     # install react-native-cli
     npm install -g react-native-cli
 }
@@ -186,6 +201,9 @@ case "$1" in
     nvm)
         setup_nvm
         ;;
+    node)
+        setup_node
+        ;;
     rvm)
         setup_rvm
         ;;
@@ -203,12 +221,13 @@ case "$1" in
         setup_homebrew
         setup_shell
         setup_nvm
+        setup_node
         setup_rvm
         setup_rn
         setup_macos
         ;;
     *)
-        echo -e $"\nUsage: $(basename "$0") {backup|link|homebrew|shell|nvm|rvm|rn|macos|agent|all}\n"
+        echo -e $"\nUsage: $(basename "$0") {backup|link|homebrew|shell|nvm|node|rvm|rn|macos|agent|all}\n"
         exit 1
         ;;
 esac

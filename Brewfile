@@ -7,7 +7,7 @@ if OS.mac?
     # Applications
     # cask "imageoptim" # a tool to optimize images
 	cask "1password/tap/1password-cli"
-    cast "zulu11"
+    cask "zulu11"
 
     # Fonts
     cask "font-fira-code"
