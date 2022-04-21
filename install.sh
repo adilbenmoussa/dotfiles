@@ -58,12 +58,29 @@ setup_symlinks() {
     done
 }
 
+backup() {
+    BACKUP_DIR=$HOME/dotfiles-backup
+
+    echo "Creating backup directory at $BACKUP_DIR"
+    mkdir -p "$BACKUP_DIR"
+
+    for file in $(get_linkables); do
+        filename=".$(basename "$file" '.symlink')"
+        target="$HOME/$filename"
+        if [ -f "$target" ]; then
+            echo "backing up $filename"
+            cp "$target" "$BACKUP_DIR"
+        else
+            warning "$filename does not exist at this location or is a symlink"
+        fi
+    done
+}
+
 setup_homebrew() {
     title "Setting up Homebrew"
 
     if test ! "$(command -v brew)"; then
         info "Homebrew not installed. Installing."
-        # Run as a login shell (non-interactive) so that the script doesn't pause for user input
         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     fi
 
@@ -105,21 +122,6 @@ setup_rn() {
     gem install -n /usr/local/bin/ fastlane
 }
 
-setup_rvm() {
-    title "Setting up RVM"
-
-    if test ! "$(command -v rvm)"; then
-        info "RVM not installed. Installing."
-        # Run as a login shell (non-interactive) so that the script doesn't pause for user input
-        curl -sSL https://get.rvm.io | bash --login
-    fi
-
-    # install ruby version
-    rvm install $RUBY_VERSION
-    # set ruby version as default
-    rvm alias create default $RUBY_VERSION
-}
-
 setup_build_agent() {
     title "Setting up the build agent"
 
@@ -133,6 +135,21 @@ setup_build_agent() {
     bundle install
     fastlane install_plugins
     fastlane cert
+}
+
+setup_rvm() {
+    title "Setting up RVM"
+
+    if test ! "$(command -v rvm)"; then
+        info "RVM not installed. Installing."
+        # Run as a login shell (non-interactive) so that the script doesn't pause for user input
+        curl -sSL https://get.rvm.io | bash --login
+    fi
+
+    # install ruby version
+    rvm install $RUBY_VERSION
+    # set ruby version as default
+    rvm alias create default $RUBY_VERSION
 }
 
 setup_macos() {
@@ -205,6 +222,9 @@ setup_shell() {
 }
 
 case "$1" in
+    backup)
+        backup
+        ;;
     link)
         setup_symlinks
         ;;
@@ -243,7 +263,7 @@ case "$1" in
         setup_macos
         ;;
     *)
-        echo -e $"\nUsage: $(basename "$0") {link|homebrew|shell|nvm|node|rvm|rn|macos|agent|all}\n"
+        echo -e $"\nUsage: $(basename "$0") {backup|link|homebrew|shell|nvm|node|rvm|rn|macos|agent|all}\n"
         exit 1
         ;;
 esac
