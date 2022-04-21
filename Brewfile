@@ -5,7 +5,7 @@ if OS.mac?
     tap "homebrew/cask-fonts"
 
     # Applications
-    # cask "imageoptim" # a tool to optimize images
+    cask "imageoptim" # a tool to optimize images
 	cask "1password/tap/1password-cli"
     cask "zulu11"
 

@@ -66,7 +66,7 @@ backup() {
 setup_git() {
     title "Setting up Git"
     
-    echo "Add default branch $DEFAULT_GIT_BRANCH"
+    info "Add default branch $DEFAULT_GIT_BRANCH"
     git config --global init.defaultBranch $DEFAULT_GIT_BRANCH
 }
 
