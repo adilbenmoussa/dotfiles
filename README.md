@@ -32,6 +32,13 @@ ZSH is configured in the `zshrc.symlink` file, which will be symlinked to the ho
 * Add the `~/bin` and `$DOTFILES/bin` directories to the path
 * And more...
 
+## Change those constants 
+
+* DEFAULT_GIT_BRANCH="development"
+* RUBY_VERSION="2.7.4"
+* NPM_VERSION="12"
+
+
 
 ## Questions
 
