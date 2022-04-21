@@ -29,7 +29,6 @@ ZSH is configured in the `zshrc.symlink` file, which will be symlinked to the ho
 * Recursively search the `$DOTFILES/zsh` directory for files ending in .zsh and source them
 * Setup zplug plugin manager for zsh plugins and installed them.
 * source a `~/.localrc` if it exists so that additional configurations can be made that won't be kept track of in this dotfiles repo. This is good for things like API keys, etc.
-* Add the `~/bin` and `$DOTFILES/bin` directories to the path
 * And more...
 
 ## Change those constants 
@@ -42,4 +41,4 @@ ZSH is configured in the `zshrc.symlink` file, which will be symlinked to the ho
 
 ## Questions
 
-If you have questions, notice issues,  or would like to see improvements, please open a new [discussion](https://github.com/nicknisi/adilbenmoussa/discussions/new) and I'm happy to help you out!
+If you have questions, notice issues,  or would like to see improvements, please open a new [discussion](https://github.com/adilbenmoussa/discussions/new) and I'm happy to help you out!
