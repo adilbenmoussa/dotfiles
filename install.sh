@@ -131,15 +131,23 @@ setup_react_native() {
     gem install -n /usr/local/bin/ fastlane
 
     info "Android bundle install"
-    cd "$CODE_DIR/android"
-    bundle install
-    fastlane install_plugins
-
+    if [[ -d "$CODE_DIR/android" ]]; then
+         cd "$CODE_DIR/android"
+         bundle install
+         fastlane install_plugins
+    else
+        error "CODE_DIR doesn't contains an android folder, check the config at zshrc.symlink"
+    fi
+   
     info "iOS bundle install"
-    cd "$CODE_DIR/ios"
-    bundle install
-    fastlane install_plugins
-    fastlane cert
+    if [[ -d "$CODE_DIR/ios" ]]; then
+         cd "$CODE_DIR/ios"
+         bundle install
+         fastlane install_plugins
+         fastlane cert
+    else
+        error "CODE_DIR doesn't contains an ios folder, check the config at zshrc.symlink"
+    fi
 }
 
 setup_rvm() {
