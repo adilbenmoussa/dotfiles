@@ -25,8 +25,6 @@ The install script will perform a check to see if it is running on an OSX machin
 
 ZSH is configured in the `zshrc.symlink` file, which will be symlinked to the home directory. The following occurs in this file:
 
-* set the `EDITOR` to nvim
-* Load any `~/.terminfo` setup
 * Set the `CODE_DIR` variable, pointing to the location where the code projects exist for exclusive autocompletion with the `c` command
 * Recursively search the `$DOTFILES/zsh` directory for files ending in .zsh and source them
 * Setup zplug plugin manager for zsh plugins and installed them.
