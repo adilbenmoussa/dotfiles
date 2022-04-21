@@ -24,8 +24,6 @@ brew "git" # Git version control (latest version)
 brew "grep" # grep (latest)
 brew "highlight" # code syntax highlighting
 brew "python" # python (latst)
-brew "nvm" # Fast Node version manager
-brew "yarn" # Even better than node
 brew "watchman" # RN file watcher
 brew "tree" # pretty-print directory contents
 brew "wdiff" # word differences in text files

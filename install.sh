@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 DOTFILES="$(pwd)"
+DEFAULT_GIT_BRANCH="development"
 RUBY_VERSION="2.7.4"
 NPM_VERSION="12"
 COLOR_GRAY="\033[1;38;5;243m"
@@ -11,7 +12,7 @@ COLOR_PURPLE="\033[1;35m"
 COLOR_YELLOW="\033[1;33m"
 COLOR_NONE="\033[0m"
 
-load_rources() {
+_load_rources() {
     . ~/.nvm/nvm.sh
     . ~/.profile
     . ~/.bashrc
@@ -44,20 +45,6 @@ get_linkables() {
     find -H "$DOTFILES" -maxdepth 3 -name '*.symlink'
 }
 
-setup_symlinks() {
-    title "Creating symlinks"
-
-    for file in $(get_linkables) ; do
-        target="$HOME/.$(basename "$file" '.symlink')"
-        if [ -e "$target" ]; then
-            info "~${target#$HOME} already exists... Skipping."
-        else
-            info "Creating symlink for $file"
-            ln -s "$file" "$target"
-        fi
-    done
-}
-
 backup() {
     BACKUP_DIR=$HOME/dotfiles-backup
 
@@ -72,6 +59,27 @@ backup() {
             cp "$target" "$BACKUP_DIR"
         else
             warning "$filename does not exist at this location or is a symlink"
+        fi
+    done
+}
+
+setup_git() {
+    title "Setting up Git"
+    
+    echo "Add default branch $DEFAULT_GIT_BRANCH"
+    git config --global init.defaultBranch $DEFAULT_GIT_BRANCH
+}
+
+setup_symlinks() {
+    title "Creating symlinks"
+
+    for file in $(get_linkables) ; do
+        target="$HOME/.$(basename "$file" '.symlink')"
+        if [ -e "$target" ]; then
+            info "~${target#$HOME} already exists... Skipping."
+        else
+            info "Creating symlink for $file"
+            ln -s "$file" "$target"
         fi
     done
 }
@@ -100,19 +108,20 @@ setup_nvm() {
 setup_node() {
     title "Setting up node"
 
-    load_rources
+    _load_rources
     # install npm version
     nvm install $NPM_VERSION
     # set npm version as default 
     nvm alias default $NPM_VERSION
 
+    # install yarn globally 
     npm install -g yarn
 }
 
 setup_rn() {
     title "Setting up React Native"
     
-    load_rources
+    _load_rources
     # install react-native-cli
     npm install -g react-native-cli
 
@@ -225,6 +234,9 @@ case "$1" in
     backup)
         backup
         ;;
+    git)
+        setup_git
+        ;;
     link)
         setup_symlinks
         ;;
@@ -253,6 +265,7 @@ case "$1" in
         setup_build_agent
         ;;
     all)
+        setup_git
         setup_symlinks
         setup_homebrew
         setup_shell
@@ -263,7 +276,7 @@ case "$1" in
         setup_macos
         ;;
     *)
-        echo -e $"\nUsage: $(basename "$0") {backup|link|homebrew|shell|nvm|node|rvm|rn|macos|agent|all}\n"
+        echo -e $"\nUsage: $(basename "$0") {backup|git|link|homebrew|shell|nvm|node|rvm|rn|macos|agent|all}\n"
         exit 1
         ;;
 esac
