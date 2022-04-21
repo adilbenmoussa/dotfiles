@@ -118,7 +118,7 @@ setup_node() {
     npm install -g yarn
 }
 
-setup_rn() {
+setup_react_native() {
     title "Setting up React Native"
     
     _load_rources
@@ -129,10 +129,6 @@ setup_rn() {
     sudo gem install cocoapods
     gem install -n /usr/local/bin/ bundler
     gem install -n /usr/local/bin/ fastlane
-}
-
-setup_build_agent() {
-    title "Setting up the build agent"
 
     info "Android bundle install"
     cd "$CODE_DIR/android"
@@ -256,13 +252,10 @@ case "$1" in
         setup_rvm
         ;;
     rn)
-        setup_rn
+        setup_react_native
         ;;
     macos)
         setup_macos
-        ;;
-    agent)
-        setup_build_agent
         ;;
     all)
         setup_git
@@ -272,11 +265,11 @@ case "$1" in
         setup_nvm
         setup_node
         setup_rvm
-        setup_rn
+        setup_react_native
         setup_macos
         ;;
     *)
-        echo -e $"\nUsage: $(basename "$0") {backup|git|link|homebrew|shell|nvm|node|rvm|rn|macos|agent|all}\n"
+        echo -e $"\nUsage: $(basename "$0") {backup|git|link|homebrew|shell|nvm|node|rvm|rn|macos|all}\n"
         exit 1
         ;;
 esac
