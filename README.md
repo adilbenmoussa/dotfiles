@@ -35,6 +35,7 @@ ZSH is configured in the `zshrc.symlink` file, which will be symlinked to the ho
 
 * DEFAULT_GIT_BRANCH="development"
 * RUBY_VERSION="2.7.4"
+* BUNDLER_VERSION="1.17.3"
 * NPM_VERSION="12"
 
 
