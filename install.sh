@@ -3,6 +3,7 @@
 DOTFILES="$(pwd)"
 DEFAULT_GIT_BRANCH="development"
 RUBY_VERSION="2.7.4"
+BUNDLER_VERSION="1.17.3"
 NPM_VERSION="12"
 COLOR_GRAY="\033[1;38;5;243m"
 COLOR_BLUE="\033[1;34m"
@@ -129,6 +130,7 @@ setup_react_native() {
     sudo gem install cocoapods
     gem install -n /usr/local/bin/ bundler
     gem install -n /usr/local/bin/ fastlane
+    gem install bundler:$BUNDLER_VERSION
 
     info "Android bundle install"
     if [[ -d "$CODE_DIR/android" ]]; then
