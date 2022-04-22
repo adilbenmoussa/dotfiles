@@ -6,7 +6,7 @@ if OS.mac?
 
     # Applications
     cask "imageoptim" # a tool to optimize images
-	cask "1password/tap/1password-cli"
+    cask "1password/tap/1password-cli"
     cask "zulu11"
 
     # Fonts
@@ -28,4 +28,3 @@ brew "watchman" # RN file watcher
 brew "tree" # pretty-print directory contents
 brew "wdiff" # word differences in text files
 brew "zsh" # zsh (latest)
-brew "zsh"
